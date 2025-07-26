@@ -16,51 +16,97 @@ interface ExperienceItem {
   current?: boolean;
 }
 
+// TODO: Add "learn more" link/button and display full page/popup?
+
 const experienceData: ExperienceItem[] = [
   {
     id: "1",
-    period: "2023 - Present",
-    title: "Senior Full Stack Developer",
-    company: "Tech Innovations Inc.",
-    location: "San Francisco, CA",
+    period: "Jan 2025 - Present",
+    title: "Full Stack Developer",
+    company: "Self-Employed",
+    location: "Lisbon, PT",
     type: "Full-time",
     current: true,
     description:
-      "Leading the development of scalable web applications using modern technologies. Architected and implemented microservices infrastructure, mentored junior developers, and collaborated with cross-functional teams to deliver high-quality products.",
-    technologies: ["React", "Node.js", "TypeScript", "AWS", "Docker", "PostgreSQL"],
+      "Created a Telegram bot for Solana blockchain interactions, featuring token trading, withdrawals, position management, a cashback system, and more.",
+    technologies: [
+      "Node.js",
+      "TypeScript",
+      "Express.js",
+      "MongoDB",
+      "quicknode",
+      "Redis",
+      "@solana/web3.js",
+      "node-telegram-bot-api",
+      "Render",
+      "i18n",
+    ],
   },
   {
     id: "2",
-    period: "2021 - 2023",
-    title: "Full Stack Developer",
-    company: "Digital Solutions Ltd.",
-    location: "New York, NY",
+    period: "Aug 2022 - Aug 2024",
+    title: "Frontend Developer",
+    company: "DEPT® - VEH",
+    location: "Amsterdam, NL",
     type: "Full-time",
     description:
-      "Developed and maintained multiple client projects ranging from e-commerce platforms to SaaS applications. Implemented responsive designs, optimized application performance, and integrated third-party APIs.",
-    technologies: ["React", "Python", "Django", "PostgreSQL", "Redis", "Stripe API"],
+      "Developed a Next.js application for a major non-profit, integrating diverse client and internal APIs. Transformed Figma designs into functional, responsive, and accessible web components. Managed weekly deployments via Azure DevOps CI/CD pipelines.",
+    technologies: [
+      "TypeScript",
+      "React.js",
+      "Next.js",
+      "GraphQL",
+      "Chakra UI",
+      "Redis",
+      "REST",
+      "Kontent.AI",
+      "zustand",
+      "Azure DevOps",
+      "Figma",
+    ],
   },
   {
     id: "3",
-    period: "2020 - 2021",
+    period: "Aug 2022 - 2024",
     title: "Frontend Developer",
-    company: "Creative Agency Co.",
-    location: "Los Angeles, CA",
+    company: "DEPT® - VIA",
+    location: "Amsterdam, NL",
     type: "Full-time",
     description:
-      "Focused on creating engaging user interfaces and experiences for various client projects. Collaborated closely with designers to implement pixel-perfect designs and ensure cross-browser compatibility.",
-    technologies: ["React", "Vue.js", "SCSS", "JavaScript", "Figma", "Adobe Creative Suite"],
+      "Served as the sole frontend developer for a 16-week release phase, successfully delivering project milestones on schedule. Integrated third-party services and CMS while developing a custom REST API. Collaborated directly with clients to align project objectives with business goals, ensuring high satisfaction rates.",
+    technologies: ["React.js", "Next.js", "Chakra UI", "JavaScript", "Figma", "MappedIn", "zustand", "Contentstack"],
   },
   {
     id: "4",
-    period: "2019 - 2020",
-    title: "Junior Developer",
-    company: "StartupXYZ",
-    location: "Austin, TX",
+    period: "Aug 2022 - 2024",
+    title: "Frontend Developer",
+    company: "DEPT®",
+    location: "Amsterdam, NL",
     type: "Full-time",
     description:
-      "Started my professional journey working on various features for a growing startup. Gained experience in full-stack development, learned best practices, and contributed to the company's rapid growth.",
-    technologies: ["JavaScript", "Node.js", "MongoDB", "Express.js", "HTML", "CSS"],
+      "Maintained an internal Next.js applications focused on AI-driven marketing solutions. Integrated custom APIs and collaborated with cross-functional teams to enhance existing features. Took on design responsibilities, creating cohesive interfaces that aligned with established themes without dedicated design support.",
+    technologies: ["TypeScript", "BitBucket", "Next.js", "axios", "react-hook-form", "zod", "zustand", "React.js"],
+  },
+  {
+    id: "5",
+    period: "Aug 2022 - 2024",
+    title: "Frontend Developer",
+    company: "DEPT® - Bol.com",
+    location: "Amsterdam, NL",
+    type: "Full-time",
+    description:
+      "Contributed to enhancing the user experience by resolving critical UI and data-related bugs. Successfully implemented a comprehensive redesign of the user onboarding flow, translating intricate Figma designs into a seamless and functional in-app experience.",
+    technologies: [
+      "TypeScript",
+      "BitBucket",
+      "Next.js",
+      "axios",
+      "react-hook-form",
+      "zod",
+      "zustand",
+      "React.js",
+      "i18n",
+    ],
   },
 ];
 
@@ -137,7 +183,7 @@ const ExperienceSection = () => {
                               <p className='text-sm font-medium'>Technologies used:</p>
                               <div className='flex flex-wrap gap-2'>
                                 {experience.technologies.map((tech) => (
-                                  <Badge key={tech} variant='secondary' className='text-xs'>
+                                  <Badge key={tech} className='text-xs'>
                                     {tech}
                                   </Badge>
                                 ))}
