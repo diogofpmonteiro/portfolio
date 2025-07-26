@@ -29,7 +29,7 @@ const projectsData: Project[] = [
     description: "A full-stack e-commerce solution with modern UI/UX and robust backend.",
     longDescription:
       "Built a comprehensive e-commerce platform with user authentication, product management, shopping cart functionality, payment integration, and admin dashboard. Features include real-time inventory updates, order tracking, and responsive design.",
-    image: "/project-ecommerce.jpg",
+    image: "/project-image-sample.png",
     technologies: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS", "Prisma"],
     liveUrl: "https://ecommerce-demo.com",
     githubUrl: "https://github.com/yourusername/ecommerce-platform",
@@ -42,7 +42,7 @@ const projectsData: Project[] = [
     description: "A collaborative task management application with real-time updates.",
     longDescription:
       "Developed a team collaboration tool with features like task assignment, progress tracking, real-time notifications, and team chat. Includes drag-and-drop kanban boards, time tracking, and detailed analytics.",
-    image: "/project-taskmanager.jpg",
+    image: "/project-image-sample.png",
     technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Express", "Material-UI"],
     liveUrl: "https://taskmanager-demo.com",
     githubUrl: "https://github.com/yourusername/task-manager",
@@ -56,7 +56,7 @@ const projectsData: Project[] = [
     description: "A beautiful weather application with detailed forecasts and maps.",
     longDescription:
       "Created a responsive weather dashboard that provides current conditions, 7-day forecasts, weather maps, and location-based alerts. Features include geolocation support, favorite locations, and weather data visualization.",
-    image: "/project-weather.jpg",
+    image: "/project-image-sample.png",
     technologies: ["Vue.js", "JavaScript", "OpenWeather API", "Chart.js", "CSS3"],
     liveUrl: "https://weather-dashboard-demo.com",
     githubUrl: "https://github.com/yourusername/weather-dashboard",
@@ -68,7 +68,7 @@ const projectsData: Project[] = [
     description: "RESTful API for a social media platform with authentication and real-time features.",
     longDescription:
       "Built a scalable REST API for a social media application with user authentication, post creation, commenting, following system, and real-time notifications. Includes rate limiting, data validation, and comprehensive testing.",
-    image: "/project-api.jpg",
+    image: "/project-image-sample.png",
     technologies: ["Node.js", "Express", "MongoDB", "JWT", "Socket.io", "Jest"],
     githubUrl: "https://github.com/yourusername/social-api",
     category: "backend",
@@ -79,7 +79,7 @@ const projectsData: Project[] = [
     description: "A modern, responsive portfolio website with animations and dark mode.",
     longDescription:
       "Designed and developed a personal portfolio website featuring smooth animations, dark/light mode toggle, responsive design, and optimized performance. Built with modern web technologies and best practices.",
-    image: "/project-portfolio.jpg",
+    image: "/project-image-sample.png",
     technologies: ["Next.js", "TypeScript", "Framer Motion", "Tailwind CSS"],
     liveUrl: "https://portfolio-demo.com",
     githubUrl: "https://github.com/yourusername/portfolio",
@@ -91,7 +91,7 @@ const projectsData: Project[] = [
     description: "Real-time chat application with rooms, file sharing, and emoji support.",
     longDescription:
       "Developed a real-time chat application with features like private messaging, group chats, file sharing, emoji reactions, and user presence indicators. Includes message encryption and moderation tools.",
-    image: "/project-chat.jpg",
+    image: "/project-image-sample.png",
     technologies: ["React", "Socket.io", "Node.js", "MongoDB", "Cloudinary"],
     liveUrl: "https://chat-demo.com",
     githubUrl: "https://github.com/yourusername/chat-app",
@@ -116,8 +116,8 @@ const ProjectsSection = () => {
   const featuredProjects = projectsData.filter((project) => project.featured);
 
   return (
-    <section id='projects' className='py-20 bg-muted/30'>
-      <div className='container mx-auto px-4'>
+    <section id='projects' className='py-20 bg-muted/30 rounded-2xl'>
+      <div className='container mx-auto px-2'>
         <div className='max-w-6xl mx-auto'>
           <div className='text-center mb-12'>
             <h2 className='text-3xl md:text-4xl font-bold mb-4'>Projects</h2>

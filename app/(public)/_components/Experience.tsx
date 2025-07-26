@@ -17,7 +17,8 @@ interface ExperienceItem {
 }
 
 // TODO: Add "learn more" link/button and display full page/popup?
-
+// TODO: add "client?: string" to experience item
+// so that we can display clients from dept
 const experienceData: ExperienceItem[] = [
   {
     id: "1",
@@ -132,7 +133,7 @@ const ExperienceSection = () => {
                   key={experience.id}
                   className={`relative flex items-start ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
                   {/* Timeline dot */}
-                  <div className='absolute left-4 md:left-1/2 w-3 h-3 bg-primary rounded-full border-4 border-background md:transform md:-translate-x-1.5 z-10'>
+                  <div className='absolute left-3 md:left-1/2 w-3 h-3 bg-primary rounded-full border-4 border-background md:transform md:-translate-x-1.5 z-10'>
                     {experience.current && (
                       <div className='absolute inset-0 bg-primary rounded-full animate-ping'></div>
                     )}
