@@ -15,28 +15,32 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { FaReact, FaJava, FaDocker, FaGitAlt } from "react-icons/fa";
+import { RiNextjsLine, RiNodejsLine, RiTailwindCssFill } from "react-icons/ri";
+import { SiTypescript, SiGraphql, SiMongodb, SiCypress } from "react-icons/si";
+import { BiLogoPostgresql } from "react-icons/bi";
+import { IconType } from "react-icons/lib";
 
 interface TechItem {
   id: string;
   name: string;
-  icon?: string;
-  color?: string;
+  icon: { name: IconType; color: string };
 }
 
 // TODO: add icons instead of colors
 const initialTechStack: TechItem[] = [
-  { id: "1", name: "React", color: "bg-blue-500" },
-  { id: "2", name: "Next.js", color: "bg-black" },
-  { id: "3", name: "TypeScript", color: "bg-blue-600" },
-  { id: "4", name: "Node.js", color: "bg-green-600" },
-  { id: "5", name: "Java", color: "bg-yellow-500" },
-  { id: "6", name: "PostgreSQL", color: "bg-blue-700" },
-  { id: "7", name: "Tailwind CSS", color: "bg-cyan-500" },
-  { id: "8", name: "Docker", color: "bg-blue-400" },
-  { id: "9", name: "GraphQL", color: "bg-orange-500" },
-  { id: "10", name: "MongoDB", color: "bg-green-500" },
-  { id: "11", name: "Jest", color: "bg-gray-600" }, // TODO: update
-  { id: "12", name: "Git", color: "bg-red-500" },
+  { id: "1", name: "React", icon: { name: FaReact, color: "#82D7F7" } },
+  { id: "2", name: "Next.js", icon: { name: RiNextjsLine, color: "dark:white" } },
+  { id: "3", name: "TypeScript", icon: { name: SiTypescript, color: "#3178C6" } },
+  { id: "4", name: "Node.js", icon: { name: RiNodejsLine, color: "#339933" } },
+  { id: "5", name: "Java", icon: { name: FaJava, color: "#007396" } },
+  { id: "6", name: "PostgreSQL", icon: { name: BiLogoPostgresql, color: "#336791" } },
+  { id: "7", name: "Tailwind CSS", icon: { name: RiTailwindCssFill, color: "62BAF3" } },
+  { id: "8", name: "Docker", icon: { name: FaDocker, color: "#1D63ED" } },
+  { id: "9", name: "GraphQL", icon: { name: SiGraphql, color: "#E10098" } },
+  { id: "10", name: "MongoDB", icon: { name: SiMongodb, color: "#00684A" } },
+  { id: "11", name: "Cypress", icon: { name: SiCypress, color: "#568A74" } },
+  { id: "12", name: "Git", icon: { name: FaGitAlt, color: "#DE5C40" } },
 ];
 
 interface SortableTechCardProps {
@@ -44,7 +48,9 @@ interface SortableTechCardProps {
 }
 
 const SortableTechCard = ({ tech }: SortableTechCardProps) => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: tech.id });
+  const { id, icon, name } = tech;
+
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -60,8 +66,8 @@ const SortableTechCard = ({ tech }: SortableTechCardProps) => {
       className={`cursor-grab active:cursor-grabbing ${isDragging ? "z-50" : ""}`}>
       <Card className={`p-4 hover:shadow-lg transition-all duration-200 ${isDragging ? "shadow-2xl scale-105" : ""}`}>
         <div className='flex items-center space-x-3'>
-          <div className={`w-3 h-3 rounded-full ${tech.color}`}></div>
-          <span className='font-medium text-sm'>{tech.name}</span>
+          <icon.name color={icon.color} />
+          <span className='font-medium text-sm'>{name}</span>
         </div>
       </Card>
     </div>

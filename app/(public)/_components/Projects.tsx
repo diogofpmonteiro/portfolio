@@ -16,7 +16,6 @@ interface Project {
   technologies: string[];
   liveUrl?: string;
   githubUrl?: string;
-  videoUrl?: string;
   category: "full-stack" | "frontend" | "backend";
   featured?: boolean;
 }
@@ -46,7 +45,6 @@ const projectsData: Project[] = [
     technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Express", "Material-UI"],
     liveUrl: "https://taskmanager-demo.com",
     githubUrl: "https://github.com/yourusername/task-manager",
-    videoUrl: "https://youtube.com/watch?v=demo",
     category: "full-stack",
     featured: true,
   },
@@ -177,14 +175,6 @@ const ProjectsSection = () => {
                           <a href={project.githubUrl} target='_blank' rel='noopener noreferrer'>
                             <Github className='w-4 h-4 mr-2' />
                             Source Code
-                          </a>
-                        </Button>
-                      )}
-                      {project.videoUrl && (
-                        <Button variant='outline' size='sm' asChild>
-                          <a href={project.videoUrl} target='_blank' rel='noopener noreferrer'>
-                            <Play className='w-4 h-4 mr-2' />
-                            Watch Video
                           </a>
                         </Button>
                       )}

@@ -133,7 +133,7 @@ const ExperienceSection = () => {
                   key={experience.id}
                   className={`relative flex items-start ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
                   {/* Timeline dot */}
-                  <div className='absolute left-3 md:left-1/2 w-3 h-3 bg-primary rounded-full border-4 border-background md:transform md:-translate-x-1.5 z-10'>
+                  <div className='absolute left-2.75 md:left-1/2 w-3 h-3 bg-primary rounded-full border-4 border-background md:transform md:-translate-x-1.75 z-10'>
                     {experience.current && (
                       <div className='absolute inset-0 bg-primary rounded-full animate-ping'></div>
                     )}
@@ -150,7 +150,7 @@ const ExperienceSection = () => {
                               <CalendarDays className='w-4 h-4' />
                               <span>{experience.period}</span>
                               {experience.current && (
-                                <Badge variant='secondary' className='text-xs'>
+                                <Badge variant='outline' className='text-xs'>
                                   Current
                                 </Badge>
                               )}
