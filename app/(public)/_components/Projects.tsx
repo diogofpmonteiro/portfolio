@@ -215,7 +215,7 @@ const ProjectsSection = () => {
                 <CardHeader className='pb-2'>
                   <div className='flex items-start justify-between'>
                     <h4 className='font-semibold'>{project.title}</h4>
-                    <Badge variant='secondary' className='text-xs'>
+                    <Badge variant='outline' className='text-xs'>
                       {/* // TODO: decide if we display category */}
                       {project.category}
                     </Badge>

@@ -1,33 +1,26 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { authClient } from "@/lib/auth-client";
-import { Loader2, SendIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { Loader2Icon, GithubIcon } from "lucide-react";
+import { useTransition } from "react";
 import { toast } from "sonner";
 
 export const LoginForm = () => {
-  const router = useRouter();
-  const [emailPending, startEmailTransition] = useTransition();
+  const [githubPending, startGithubTransition] = useTransition();
 
-  const [email, setEmail] = useState("");
-
-  const signInWithEmail = () => {
-    startEmailTransition(async () => {
-      await authClient.emailOtp.sendVerificationOtp({
-        email,
-        type: "sign-in",
+  const signInWithGithub = async () => {
+    startGithubTransition(async () => {
+      await authClient.signIn.social({
+        provider: "github",
+        callbackURL: "/",
         fetchOptions: {
           onSuccess: () => {
-            toast.success("Email sent");
-            router.push(`/verify-request?email=${email}`);
+            toast.success("Signed in with GitHub, you will be redirected..");
           },
-          onError: () => {
-            toast.error("Error sending email");
+          onError: (_error) => {
+            toast.error("Internal server error");
           },
         },
       });
@@ -37,33 +30,24 @@ export const LoginForm = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className='text-xl'>Login</CardTitle>
+        <CardTitle className='text-xl'>Welcome back!</CardTitle>
+        <CardDescription>Login with Github</CardDescription>
       </CardHeader>
 
       <CardContent className='flex flex-col gap-4'>
-        <div className='grid gap-6'>
-          <Label htmlFor='email'>Email</Label>
-          <Input
-            type='email'
-            placeholder='m@example.com'
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-          <Button onClick={signInWithEmail} disabled={emailPending}>
-            {emailPending ? (
-              <>
-                <Loader2 className='size-4 animate-spin' />
-                <span>Loading...</span>
-              </>
-            ) : (
-              <>
-                <SendIcon className='size-4' />
-                <span>Continue with Email</span>
-              </>
-            )}
-          </Button>
-        </div>
+        <Button className='w-full' variant='outline' onClick={signInWithGithub} disabled={githubPending}>
+          {githubPending ? (
+            <>
+              <Loader2Icon className='size-4 animate-spin' />
+              <span>Loading...</span>
+            </>
+          ) : (
+            <>
+              <GithubIcon className='size-4' />
+              Sign in with Github
+            </>
+          )}
+        </Button>
       </CardContent>
     </Card>
   );

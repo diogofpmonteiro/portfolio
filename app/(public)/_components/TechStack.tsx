@@ -27,7 +27,6 @@ interface TechItem {
   icon: { name: IconType; color: string };
 }
 
-// TODO: add icons instead of colors
 const initialTechStack: TechItem[] = [
   { id: "1", name: "React", icon: { name: FaReact, color: "#82D7F7" } },
   { id: "2", name: "Next.js", icon: { name: RiNextjsLine, color: "dark:white" } },
