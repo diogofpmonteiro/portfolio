@@ -58,6 +58,7 @@ const SortableTechCard = ({ tech }: SortableTechCardProps) => {
 
   return (
     <div
+      suppressHydrationWarning
       ref={setNodeRef}
       style={style}
       {...attributes}

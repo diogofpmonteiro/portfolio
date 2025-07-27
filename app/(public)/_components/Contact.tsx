@@ -1,74 +1,72 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Mail, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react";
+import { Mail, MapPin, Send, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
-// TODO: instead of useState form use react-hook-form to manage form state
-// decide on strategy to handle emails/contact
+import emailjs from "@emailjs/browser";
 
-interface ContactFormData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ContactFormData, contactFormSchema } from "@/lib/zod-schemas";
+import { env } from "@/lib/env";
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus("idle");
+  const sendEmail = async () => {
+    if (!formRef.current) return;
 
     try {
-      // Replace this with your actual form submission logic
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await emailjs.sendForm(
+        env.NEXT_PUBLIC_EMAIL_SERVICE_ID,
+        env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID,
+        formRef.current,
+        {
+          publicKey: env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY,
+        }
+      );
 
-      if (response.ok) {
-        setSubmitStatus("success");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-        toast("Thank you for reaching out. I'll get back to you soon.");
+      if (res.status === 200 || res.status === 202) {
+        form.reset();
+        toast.success("Thanks for reaching out!");
       } else {
-        throw new Error("Failed to send message");
+        throw new Error("Failed to send");
       }
     } catch (error) {
-      setSubmitStatus("error");
-      toast("Failed to send message");
+      console.log("Failed", error);
+      throw new Error("Failed to send");
+    }
+  };
+
+  const onSubmit = async () => {
+    setIsSubmitting(true);
+
+    try {
+      await sendEmail();
+    } catch (error) {
+      toast.error("Failed to send message");
     } finally {
       setIsSubmitting(false);
     }
   };
-
-  const isFormValid = formData.name && formData.email && formData.subject && formData.message;
 
   return (
     <section id='contact' className='py-20'>
@@ -131,86 +129,80 @@ const ContactSection = () => {
                 <CardTitle>Send me a message</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className='space-y-4'>
-                  <div className='grid grid-cols-2 gap-4'>
-                    <div className='space-y-2'>
-                      <Label htmlFor='name'>Name *</Label>
-                      <Input
-                        id='name'
+                <Form {...form}>
+                  <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+                    <div className='grid grid-cols-2 gap-4'>
+                      <FormField
+                        control={form.control}
                         name='name'
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        placeholder='Your name'
-                        required
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Name *</FormLabel>
+                            <FormControl>
+                              <Input placeholder='Your name' {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
                       />
-                    </div>
-                    <div className='space-y-2'>
-                      <Label htmlFor='email'>Email *</Label>
-                      <Input
-                        id='email'
+                      <FormField
+                        control={form.control}
                         name='email'
-                        type='email'
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder='email@example.com'
-                        required
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email *</FormLabel>
+                            <FormControl>
+                              <Input type='email' placeholder='email@example.com' {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
                       />
                     </div>
-                  </div>
 
-                  <div className='space-y-2'>
-                    <Label htmlFor='subject'>Subject *</Label>
-                    <Input
-                      id='subject'
+                    <FormField
+                      control={form.control}
                       name='subject'
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      placeholder="What's this about?"
-                      required
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Subject *</FormLabel>
+                          <FormControl>
+                            <Input placeholder="What's this about?" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
 
-                  <div className='space-y-2'>
-                    <Label htmlFor='message'>Message *</Label>
-                    <Textarea
-                      id='message'
+                    <FormField
+                      control={form.control}
                       name='message'
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      placeholder='Tell me about your project or idea...'
-                      rows={5}
-                      required
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Message *</FormLabel>
+                          <FormControl>
+                            <Textarea placeholder='Tell me about your project or idea...' rows={5} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
 
-                  <Button type='submit' className='w-full' disabled={!isFormValid || isSubmitting}>
-                    {isSubmitting ? (
-                      <>
-                        <div className='w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2' />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className='w-4 h-4 mr-2' />
-                        Send Message
-                      </>
-                    )}
-                  </Button>
-
-                  {submitStatus === "success" && (
-                    <div className='flex items-center gap-2 text-green-600 text-sm'>
-                      <CheckCircle className='w-4 h-4' />
-                      Message sent successfully!
-                    </div>
-                  )}
-
-                  {submitStatus === "error" && (
-                    <div className='flex items-center gap-2 text-red-600 text-sm'>
-                      <AlertCircle className='w-4 h-4' />
-                      Failed to send message. Please try again.
-                    </div>
-                  )}
-                </form>
+                    <Button type='submit' className='w-full' disabled={isSubmitting}>
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className='size-4 mr-2 animate-spin' />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Send className='w-4 h-4 mr-2' />
+                          Send Message
+                        </>
+                      )}
+                    </Button>
+                  </form>
+                </Form>
               </CardContent>
             </Card>
           </div>
