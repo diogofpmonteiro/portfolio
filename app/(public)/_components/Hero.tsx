@@ -11,6 +11,7 @@ const HeroSection = () => {
       <div className='container mx-auto px-4'>
         <div className='max-w-4xl mx-auto text-center'>
           <div className='relative w-32 h-32 mx-auto mb-8'>
+            {/* // TODO: Optimize this image! */}
             <Image
               src='/picture.jpeg'
               alt='Profile'
@@ -32,9 +33,9 @@ const HeroSection = () => {
               <span className='bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent'>Diogo</span>
             </h1>
 
-            <p className='text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto'>
-              I'm a <span className='text-foreground font-semibold'>Full Stack Developer</span> passionate about
-              creating digital experiences.
+            <p className='text-xl md:text-2xl text-muted-foreground max-w-xl mx-auto'>
+              I'm a <span className='text-foreground font-semibold'>Full Stack Developer</span>, inspired by turning
+              your ideas into reality.
             </p>
           </div>
 

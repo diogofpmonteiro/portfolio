@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/theme-toggle";
+import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState("");
@@ -36,6 +37,16 @@ const Navbar = () => {
     }
   };
 
+  const signOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          console.log("signed out");
+        },
+      },
+    });
+  };
+
   const navItems = [
     { id: "experience", label: "Experience" },
     { id: "projects", label: "Projects" },
@@ -59,6 +70,7 @@ const Navbar = () => {
             <ModeToggle />
           </div>
           {/* Mobile menu button */}
+          <Button onClick={signOut}>Sign out</Button>
           <Button
             variant='ghost'
             size='sm'

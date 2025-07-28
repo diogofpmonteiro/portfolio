@@ -36,6 +36,8 @@ model User {
   banReason  String?
   banExpires DateTime?
 
+  isAnonymous Boolean?
+
   @@unique([email])
   @@map("user")
 }

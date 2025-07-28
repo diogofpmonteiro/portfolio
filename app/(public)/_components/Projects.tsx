@@ -4,8 +4,9 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { ExternalLink, Github, Play } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
+import { authClient } from "@/lib/auth-client";
 
 interface Project {
   id: string;
@@ -105,6 +106,8 @@ const categories = [
 ];
 
 const ProjectsSection = () => {
+  const { data: session, isPending } = authClient.useSession();
+  console.log(session, isPending);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [expandedProject, setExpandedProject] = useState<string | null>(null);
 
@@ -143,7 +146,6 @@ const ProjectsSection = () => {
                     <CardHeader>
                       <div className='flex items-start justify-between'>
                         <h4 className='text-xl font-semibold'>{project.title}</h4>
-                        {/* // TODO: decide if we display category */}
                         <Badge variant='outline' className='text-xs'>
                           {project.category}
                         </Badge>
@@ -216,7 +218,6 @@ const ProjectsSection = () => {
                   <div className='flex items-start justify-between'>
                     <h4 className='font-semibold'>{project.title}</h4>
                     <Badge variant='outline' className='text-xs'>
-                      {/* // TODO: decide if we display category */}
                       {project.category}
                     </Badge>
                   </div>
