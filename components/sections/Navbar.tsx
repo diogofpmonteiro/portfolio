@@ -8,6 +8,7 @@ import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState("");
+  const { data: session } = authClient.useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,10 +69,10 @@ const Navbar = () => {
               </Button>
             ))}
             <ModeToggle />
+
+            {session && <Button onClick={signOut}>Sign out</Button>}
           </div>
           {/* Mobile menu button */}
-          {/* // TODO: delete / update this button */}
-          <Button onClick={signOut}>Sign out</Button>
           <Button
             variant='ghost'
             size='sm'

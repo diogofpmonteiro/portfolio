@@ -16,8 +16,8 @@ interface ExperienceItem {
   current?: boolean;
 }
 
-// TODO: Add "learn more" link/button and display full page/popup?
 // TODO: add "client?: string" to experience item
+// TODO: update experience item dates
 // so that we can display clients from dept
 const experienceData: ExperienceItem[] = [
   {

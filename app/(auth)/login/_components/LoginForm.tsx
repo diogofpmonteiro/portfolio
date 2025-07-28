@@ -30,20 +30,16 @@ export const LoginForm = () => {
 
   const signInAnonymously = async () => {
     startAnonymousTransition(async () => {
-      try {
-        await authClient.signIn.anonymous({
-          fetchOptions: {
-            onSuccess: () => {
-              toast.success("Signed in anonymously, you will be redirected..");
-            },
-            onError: (_error) => {
-              toast.error("Failed to sign in anonymously");
-            },
+      await authClient.signIn.anonymous({
+        fetchOptions: {
+          onSuccess: () => {
+            toast.success("Signed in anonymously, you will be redirected..");
           },
-        });
-      } catch (error) {
-        toast.error("Internal server error");
-      }
+          onError: (_error) => {
+            toast.error("Failed to sign in anonymously");
+          },
+        },
+      });
     });
   };
 

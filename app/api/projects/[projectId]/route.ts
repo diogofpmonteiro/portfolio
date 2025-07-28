@@ -1,3 +1,4 @@
+import { requireAdmin } from "@/app/data/require-admin";
 import { prisma } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -23,6 +24,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectI
 
 // Update a specific project
 export async function PUT(request: NextRequest, { params }: { params: { projectId: string } }) {
+  await requireAdmin();
   try {
     const body = await request.json();
 
@@ -63,6 +65,7 @@ export async function PUT(request: NextRequest, { params }: { params: { projectI
 
 // Delete a specific project
 export async function DELETE(request: NextRequest, { params }: { params: { projectId: string } }) {
+  await requireAdmin();
   try {
     // Check if project exists
     const existingProject = await prisma.project.findUnique({

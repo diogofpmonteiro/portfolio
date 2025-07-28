@@ -8,3 +8,17 @@ export const contactFormSchema = z.object({
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
+
+export const projectSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  longDescription: z.string().min(1, "Long description is required"),
+  image: z.string().min(1),
+  technologies: z.array(z.string()).min(1, "At least one technology is required"),
+  liveUrl: z.url("Must be a valid URL").optional().or(z.literal("")),
+  githubUrl: z.url("Must be a valid URL").optional().or(z.literal("")),
+  category: z.enum(["full-stack", "frontend", "backend"]),
+  featured: z.boolean(),
+});
+
+export type ProjectFormData = z.infer<typeof projectSchema>;
