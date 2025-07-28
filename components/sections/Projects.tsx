@@ -29,7 +29,6 @@ const ProjectsSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  // Fetch projects from API
   // TODO: update this logic with react-query
   useEffect(() => {
     const fetchProjects = async () => {
