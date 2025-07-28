@@ -2,21 +2,13 @@
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/theme-toggle";
+import { useSignOut } from "@/hooks/use-signout";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 
 const AdminNavbar = () => {
   const { data: session } = authClient.useSession();
-
-  const signOut = async () => {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          console.log("signed out");
-        },
-      },
-    });
-  };
+  const { signOut } = useSignOut();
 
   return (
     <nav className='fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b'>
