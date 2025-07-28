@@ -13,8 +13,8 @@ import { Project } from "@/lib/types";
 
 const ProjectManager = () => {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchProjects = async () => {
@@ -47,9 +47,7 @@ const ProjectManager = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`/api/projects/${projectId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(`/api/projects/${projectId}`, { method: "DELETE" });
 
       if (response.ok) {
         toast.success("Project deleted successfully");
@@ -102,10 +100,10 @@ const ProjectManager = () => {
       <div className='flex items-center justify-between'>
         <div>
           <h2 className='text-2xl font-bold'>Project Management</h2>
-          <p className='text-muted-foreground'>Manage your portfolio projects - create, edit, and delete projects.</p>
+          <p className='text-muted-foreground'>Manage the portfolio projects - create, edit, and delete projects.</p>
         </div>
         <Button onClick={handleCreateProject}>
-          <Plus className='w-4 h-4 mr-2' />
+          <Plus className='w-4 h-4' />
           Add Project
         </Button>
       </div>

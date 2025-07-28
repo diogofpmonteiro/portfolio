@@ -1,5 +1,3 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { CalendarDays, MapPin, Building } from "lucide-react";
@@ -9,6 +7,7 @@ interface ExperienceItem {
   period: string;
   title: string;
   company: string;
+  client?: string;
   location: string;
   type: "Full-time" | "Part-time" | "Contract" | "Freelance";
   description: string;
@@ -16,9 +15,6 @@ interface ExperienceItem {
   current?: boolean;
 }
 
-// TODO: add "client?: string" to experience item
-// TODO: update experience item dates
-// so that we can display clients from dept
 const experienceData: ExperienceItem[] = [
   {
     id: "1",
@@ -47,7 +43,8 @@ const experienceData: ExperienceItem[] = [
     id: "2",
     period: "Aug 2022 - Aug 2024",
     title: "Frontend Developer",
-    company: "DEPT® - VEH",
+    company: "DEPT®",
+    client: "Vereniging Eigen Huis",
     location: "Amsterdam, NL",
     type: "Full-time",
     description:
@@ -68,9 +65,10 @@ const experienceData: ExperienceItem[] = [
   },
   {
     id: "3",
-    period: "Aug 2022 - 2024",
+    period: "Feb 2024 - Aug 2024",
     title: "Frontend Developer",
-    company: "DEPT® - VIA",
+    company: "DEPT®",
+    client: "Via Outlets",
     location: "Amsterdam, NL",
     type: "Full-time",
     description:
@@ -79,24 +77,14 @@ const experienceData: ExperienceItem[] = [
   },
   {
     id: "4",
-    period: "Aug 2022 - 2024",
-    title: "Frontend Developer",
+    period: "July 2023 - Dec 2023",
+    title: "Junior Frontend Developer",
     company: "DEPT®",
+    client: "Bol.com",
     location: "Amsterdam, NL",
     type: "Full-time",
     description:
-      "Maintained an internal Next.js applications focused on AI-driven marketing solutions. Integrated custom APIs and collaborated with cross-functional teams to enhance existing features. Took on design responsibilities, creating cohesive interfaces that aligned with established themes without dedicated design support.",
-    technologies: ["TypeScript", "BitBucket", "Next.js", "axios", "react-hook-form", "zod", "zustand", "React.js"],
-  },
-  {
-    id: "5",
-    period: "Aug 2022 - 2024",
-    title: "Frontend Developer",
-    company: "DEPT® - Bol.com",
-    location: "Amsterdam, NL",
-    type: "Full-time",
-    description:
-      "Contributed to enhancing the user experience by resolving critical UI and data-related bugs. Successfully implemented a comprehensive redesign of the user onboarding flow, translating intricate Figma designs into a seamless and functional in-app experience.",
+      "Contributed to enhancing the user experience by resolving UI and data-related bugs. Successfully implemented a comprehensive redesign of the user onboarding flow, translating intricate Figma designs into a seamless and functional in-app experience.",
     technologies: [
       "TypeScript",
       "BitBucket",
@@ -109,13 +97,24 @@ const experienceData: ExperienceItem[] = [
       "i18n",
     ],
   },
+  {
+    id: "5",
+    period: "Feb 2023 - May 2023",
+    title: "Junior Frontend Developer",
+    company: "DEPT®",
+    location: "Amsterdam, NL",
+    type: "Full-time",
+    description:
+      "Maintained an internal Next.js applications focused on AI-driven marketing solutions. Integrated custom APIs and collaborated with cross-functional teams to enhance existing features. Took on design responsibilities, creating cohesive interfaces that aligned with established themes without dedicated design support.",
+    technologies: ["TypeScript", "BitBucket", "Next.js", "axios", "react-hook-form", "zod", "zustand", "React.js"],
+  },
 ];
 
 const ExperienceSection = () => {
   return (
     <section id='experience' className='py-20'>
-      <div className='container mx-auto px-4'>
-        <div className='max-w-4xl mx-auto'>
+      <div className='container mx-auto px-4 md:my-32'>
+        <div className='max-w-4xl mx-auto flex flex-col items-center'>
           <div className='text-center mb-12'>
             <h2 className='text-3xl md:text-4xl font-bold mb-4'>Work Experience</h2>
             <p className='text-muted-foreground text-lg max-w-2xl mx-auto'>
@@ -143,42 +142,45 @@ const ExperienceSection = () => {
                   <div className={`ml-12 md:ml-0 md:w-1/2 ${index % 2 === 0 ? "md:pr-8" : "md:pl-8"}`}>
                     <Card className='hover:shadow-lg transition-shadow duration-300'>
                       <CardContent className='p-6'>
-                        <div className='space-y-4'>
-                          {/* Header */}
-                          <div className='space-y-2'>
-                            <div className='flex items-center gap-2 text-sm text-muted-foreground'>
-                              <CalendarDays className='w-4 h-4' />
-                              <span>{experience.period}</span>
-                              {experience.current && (
-                                <Badge variant='outline' className='text-xs'>
-                                  Current
-                                </Badge>
-                              )}
-                            </div>
-
-                            <h3 className='text-xl font-semibold'>{experience.title}</h3>
-
-                            <div className='flex flex-col sm:flex-row sm:items-center gap-2 text-sm text-muted-foreground'>
-                              <div className='flex items-center gap-1'>
-                                <Building className='w-4 h-4' />
-                                <span>{experience.company}</span>
-                              </div>
-                              <span className='hidden sm:inline'>•</span>
-                              <div className='flex items-center gap-1'>
-                                <MapPin className='w-4 h-4' />
-                                <span>{experience.location}</span>
-                              </div>
-                              <span className='hidden sm:inline'>•</span>
-                              <Badge variant='outline' className='w-fit'>
-                                {experience.type}
+                        {/* Header */}
+                        <div className='space-y-3'>
+                          <div className='flex items-center gap-2 text-sm text-muted-foreground'>
+                            <CalendarDays className='w-4 h-4' />
+                            <span>{experience.period}</span>
+                            <Badge variant='outline' className='w-fit'>
+                              {experience.type}
+                            </Badge>
+                            {experience.current && (
+                              <Badge variant='outline' className='text-xs'>
+                                Current
                               </Badge>
+                            )}
+                          </div>
+
+                          <h3 className='text-xl font-semibold'>{experience.title}</h3>
+
+                          <div className='flex flex-col sm:flex-row sm:items-center gap-2 text-sm text-muted-foreground'>
+                            <div className='flex items-center gap-1'>
+                              <Building className='w-4 h-4' />
+                              <span>{experience.company}</span>
+                            </div>
+                            {experience.client && (
+                              <>
+                                <span className='hidden sm:inline'>•</span>
+                                <div className='flex items-center gap-1'>
+                                  <span>{experience.client}</span>
+                                </div>
+                              </>
+                            )}
+                            <span className='hidden sm:inline'>•</span>
+                            <div className='flex items-center gap-1'>
+                              <MapPin className='w-4 h-4' />
+                              <span>{experience.location}</span>
                             </div>
                           </div>
 
-                          {/* Description */}
                           <p className='text-muted-foreground leading-relaxed'>{experience.description}</p>
 
-                          {/* Technologies */}
                           {experience.technologies && (
                             <div className='space-y-2'>
                               <p className='text-sm font-medium'>Technologies used:</p>
@@ -199,6 +201,10 @@ const ExperienceSection = () => {
               ))}
             </div>
           </div>
+          <p className='text-[10px] mt-12 text-muted-foreground text-center max-w-xl'>
+            Note: As a developer for a design agency, I ended up working on multiple projects, which could overlap. So
+            if you have any doubts regarding the timeline, maybe that can help explain it. 🙂
+          </p>
         </div>
       </div>
     </section>

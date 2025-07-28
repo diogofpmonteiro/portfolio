@@ -46,15 +46,15 @@ const ProjectForm = ({ project, isOpen, onClose, onSubmit, isLoading = false }: 
   useEffect(() => {
     if (isOpen && project) {
       form.reset({
-        title: project.title || "",
-        description: project.description || "",
-        longDescription: project.longDescription || "",
-        image: project.image || "",
-        technologies: project.technologies || [],
+        title: project.title,
+        description: project.description,
+        longDescription: project.longDescription,
+        image: project.image,
+        technologies: project.technologies,
         liveUrl: project.liveUrl || "",
         githubUrl: project.githubUrl || "",
         category: project.category as "full-stack" | "frontend" | "backend",
-        featured: project.featured || false,
+        featured: project.featured,
       });
     }
   }, [isOpen, project, form]);
@@ -89,14 +89,24 @@ const ProjectForm = ({ project, isOpen, onClose, onSubmit, isLoading = false }: 
   };
 
   const handleClose = () => {
-    form.reset();
+    form.reset({
+      title: "",
+      description: "",
+      longDescription: "",
+      image: "",
+      technologies: [],
+      liveUrl: "",
+      githubUrl: "",
+      category: undefined,
+      featured: false,
+    });
     setNewTechnology("");
     onClose();
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className='max-w-2xl max-h-[90vh] overflow-y-auto'>
+      <DialogContent className='min-w-3xl max-h-[90vh] overflow-y-auto'>
         <DialogHeader>
           <DialogTitle>{project ? "Edit Project" : "Create New Project"}</DialogTitle>
         </DialogHeader>
@@ -270,7 +280,7 @@ const ProjectForm = ({ project, isOpen, onClose, onSubmit, isLoading = false }: 
                   <div className='space-y-1 leading-none'>
                     <FormLabel>Featured Project</FormLabel>
                     <p className='text-sm text-muted-foreground'>
-                      Featured projects will be displayed prominently on your portfolio
+                      Featured projects will be displayed prominently on the portfolio
                     </p>
                   </div>
                 </FormItem>
