@@ -1,20 +1,21 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/theme-toggle";
 import { authClient } from "@/lib/auth-client";
 import { useSignOut } from "@/hooks/use-signout";
+import { Menu } from "@/components/ui/menu";
 
 const Navbar = () => {
   const { data: session } = authClient.useSession();
   const { signOut } = useSignOut();
   const [activeSection, setActiveSection] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["intro", "tech-stack", "experience", "projects", "contact"];
+      const sections = ["experience", "projects", "contact"];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -37,6 +38,7 @@ const Navbar = () => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+      setIsMobileMenuOpen(false);
     }
   };
 
@@ -50,6 +52,7 @@ const Navbar = () => {
     <nav className='fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b'>
       <div className='container mx-auto px-4 py-4'>
         <div className='flex items-center justify-end'>
+          {/* Desktop Navigation */}
           <div className='hidden md:flex items-center space-x-3'>
             {navItems.map((item) => (
               <Button
@@ -64,18 +67,30 @@ const Navbar = () => {
 
             {session && <Button onClick={signOut}>Sign out</Button>}
           </div>
-          {/* Mobile menu button */}
-          <Button
-            variant='ghost'
-            size='sm'
-            className='md:hidden'
-            onClick={() => {
-              // TODO: Toggle mobile menu - implement this with state
-            }}>
-            <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 12h16M4 18h16' />
-            </svg>
-          </Button>
+
+          {/* Mobile Menu */}
+          <Menu isOpen={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <div className='flex-col space-y-4 mt-12'>
+              {navItems.map((item) => (
+                <Button
+                  key={item.id}
+                  variant={activeSection === item.id ? "default" : "ghost"}
+                  onClick={() => scrollToSection(item.id)}
+                  className='text-sm w-full justify-start'>
+                  {item.label}
+                </Button>
+              ))}
+            </div>
+
+            <div className='flex gap-4 justify-end items-end'>
+              <ModeToggle />
+              {session && (
+                <Button onClick={signOut} className='w-fit'>
+                  Sign out
+                </Button>
+              )}
+            </div>
+          </Menu>
         </div>
       </div>
     </nav>
