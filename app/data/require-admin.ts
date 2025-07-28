@@ -17,5 +17,5 @@ export async function requireAdmin() {
     return redirect("/not-admin");
   }
 
-  return session;
+  return session.user;
 }

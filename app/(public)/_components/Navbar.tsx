@@ -70,6 +70,7 @@ const Navbar = () => {
             <ModeToggle />
           </div>
           {/* Mobile menu button */}
+          {/* // TODO: delete / update this button */}
           <Button onClick={signOut}>Sign out</Button>
           <Button
             variant='ghost'
