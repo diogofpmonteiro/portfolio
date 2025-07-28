@@ -5,10 +5,12 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/theme-toggle";
 import { authClient } from "@/lib/auth-client";
+import { useSignOut } from "@/hooks/use-signout";
 
 const Navbar = () => {
-  const [activeSection, setActiveSection] = useState("");
   const { data: session } = authClient.useSession();
+  const { signOut } = useSignOut();
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,16 +38,6 @@ const Navbar = () => {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
-  };
-
-  const signOut = async () => {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          console.log("signed out");
-        },
-      },
-    });
   };
 
   const navItems = [
