@@ -11,20 +11,20 @@ import { toast } from "sonner";
 import ProjectForm from "./project-form";
 import { Project } from "@/lib/types";
 import { tryCatch } from "@/lib/try-catch";
-import { deleteProject } from "@/app/api/projects/actions";
+import { createProject, deleteProject, editProject } from "@/app/api/projects/actions";
+import { ProjectSchemaType } from "@/lib/zod-schemas";
 
-const ProjectManager = ({ initialProjects }: { initialProjects: Project[] }) => {
-  const [projects, setProjects] = useState<Project[]>(initialProjects);
+const ProjectManager = ({ projects }: { projects: Project[] }) => {
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDeleteProject = async (projectId: string) => {
+    setIsLoading(true);
+
     if (!confirm("Are you sure you want to delete this project?")) {
       return;
     }
-
-    setIsLoading(true);
 
     const { result, error } = await tryCatch(deleteProject(projectId));
 
@@ -42,32 +42,28 @@ const ProjectManager = ({ initialProjects }: { initialProjects: Project[] }) => 
     setIsLoading(false);
   };
 
-  const handleFormSubmit = async (data: any) => {
+  const handleFormSubmit = async (project: ProjectSchemaType) => {
     setIsLoading(true);
-    try {
-      const url = editingProject ? `/api/projects/${editingProject.id}` : "/api/projects";
-      const method = editingProject ? "PUT" : "POST";
 
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+    const { result, error } = await tryCatch(
+      editingProject ? editProject(project, editingProject.id) : createProject(project)
+    );
 
-      if (response.ok) {
-        toast.success(editingProject ? "Project updated successfully" : "Project created successfully");
-
-        setIsFormOpen(false);
-        setEditingProject(null);
-      } else {
-        throw new Error(`Failed to ${editingProject ? "update" : "create"} project`);
-      }
-    } catch (error) {
-      console.error("Error saving project:", error);
+    if (error) {
       toast.error(`Failed to ${editingProject ? "update" : "create"} project`);
-    } finally {
       setIsLoading(false);
+      return;
     }
+
+    if (result.status === "success") {
+      toast.success(result.message);
+      setIsFormOpen(false);
+      setEditingProject(null);
+    } else if (result.status === "error") {
+      toast.error(result.message);
+    }
+
+    setIsLoading(false);
   };
 
   return (
@@ -89,7 +85,7 @@ const ProjectManager = ({ initialProjects }: { initialProjects: Project[] }) => 
 
       {/* Projects Grid */}
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-        {projects.map((project) => (
+        {projects?.map((project) => (
           <Card key={project.id} className='overflow-hidden'>
             <div className='relative h-40'>
               <Image src={project.image} alt={project.title} fill className='object-cover' />
@@ -165,7 +161,7 @@ const ProjectManager = ({ initialProjects }: { initialProjects: Project[] }) => 
         ))}
       </div>
 
-      {projects.length === 0 && (
+      {projects?.length === 0 && (
         <Card>
           <CardContent className='text-center py-12'>
             <div className='text-muted-foreground mb-4'>

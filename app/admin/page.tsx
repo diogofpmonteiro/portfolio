@@ -6,5 +6,5 @@ export default async function AdminPage() {
   await requireAdmin();
   const projects = await getAllProjects();
 
-  return <ProjectManager initialProjects={projects} />;
+  return <ProjectManager projects={projects} />;
 }
