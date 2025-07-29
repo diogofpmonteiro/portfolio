@@ -9,12 +9,12 @@ export default async function Home() {
   const projects = await getAllProjects();
 
   return (
-    <>
+    <div className='space-y-24'>
       <HeroSection />
       <TechStackSection />
       <ExperienceSection />
       <ProjectsSection projects={projects} />
       <ContactSection />
-    </>
+    </div>
   );
 }

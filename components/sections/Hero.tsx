@@ -7,11 +7,10 @@ import Image from "next/image";
 
 const HeroSection = () => {
   return (
-    <section id='intro' className='min-h-screen flex items-center justify-center py-20'>
+    <section id='intro' className='min-h-[90vh] flex items-center justify-center pt-20'>
       <div className='container mx-auto px-4'>
         <div className='max-w-4xl mx-auto text-center'>
           <div className='relative w-32 h-32 mx-auto mb-8'>
-            {/* // TODO: Optimize this image! */}
             <Image
               src='/picture.jpeg'
               alt='Profile'

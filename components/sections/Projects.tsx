@@ -37,11 +37,6 @@ const ProjectsSection = ({ projects }: { projects: Project[] }) => {
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setSelectedProject(null);
-    setIsModalOpen(false);
-  };
-
   return (
     <>
       <section id='projects' className='py-20 bg-muted/30 rounded-2xl'>
@@ -53,8 +48,7 @@ const ProjectsSection = ({ projects }: { projects: Project[] }) => {
               <p className='text-sm text-blue-700 dark:text-blue-300'>
                 <span className='font-bold underline'>Nice!</span> You authenticated and are now viewing this section as
                 an admin. The edit and delete buttons available in each project card are for demonstration purposes,
-                showcasing CRUD functionality. You can update the projects but when you refresh the page the changes
-                will not be saved.
+                showcasing CRUD functionality. You won't be able to update the projects.
               </p>
             </div>
           </div>
@@ -241,11 +235,14 @@ const ProjectsSection = ({ projects }: { projects: Project[] }) => {
         </div>
       </section>
 
-      {/* Project Modal */}
+      {/* Project Info Modal */}
       <ProjectModal
         project={selectedProject}
         isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        onClose={() => {
+          setSelectedProject(null);
+          setIsModalOpen(false);
+        }}
         isLoggedIn={!!session?.user.id}
         onEdit={() => {
           setIsFormOpen(true);
@@ -257,6 +254,7 @@ const ProjectsSection = ({ projects }: { projects: Project[] }) => {
         }}
       />
 
+      {/* Project Form Modal */}
       <ProjectForm
         project={selectedProject}
         isOpen={isFormOpen}

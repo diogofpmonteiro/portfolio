@@ -113,7 +113,7 @@ const experienceData: ExperienceItem[] = [
 const ExperienceSection = () => {
   return (
     <section id='experience' className='py-20'>
-      <div className='container mx-auto px-4 md:my-32'>
+      <div className='container mx-auto px-4'>
         <div className='max-w-4xl mx-auto flex flex-col items-center'>
           <div className='text-center mb-12'>
             <h2 className='text-3xl md:text-4xl font-bold mb-4'>Work Experience</h2>
