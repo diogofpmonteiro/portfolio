@@ -10,6 +10,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import ProjectForm from "./project-form";
 import { Project } from "@/lib/types";
+import { getAllProjects } from "@/app/data/get-all-projects";
 
 const ProjectManager = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -18,15 +19,8 @@ const ProjectManager = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchProjects = async () => {
-    try {
-      const response = await fetch("/api/projects");
-      if (response.ok) {
-        const data = await response.json();
-        setProjects(data);
-      }
-    } catch (error) {
-      console.error("Error fetching projects:", error);
-    }
+    const projects = await getAllProjects();
+    setProjects(projects);
   };
 
   const handleCreateProject = () => {
@@ -62,6 +56,7 @@ const ProjectManager = () => {
 
     setIsLoading(false);
   };
+
   const handleFormSubmit = async (data: any) => {
     setIsLoading(true);
     try {

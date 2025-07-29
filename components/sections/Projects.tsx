@@ -19,36 +19,13 @@ const categories = [
   { id: "backend", label: "Backend" },
 ];
 
-const ProjectsSection = () => {
+const ProjectsSection = ({ projects }: { projects: Project[] }) => {
   const { data: session } = authClient.useSession();
 
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
-
-  // TODO: update this logic with react-query
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch("/api/projects");
-        if (response.ok) {
-          const data = await response.json();
-          setProjects(data);
-        } else {
-          console.error("Failed to fetch projects");
-        }
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProjects();
-  }, []);
 
   const filteredProjects =
     selectedCategory === "all" ? projects : projects.filter((project) => project.category === selectedCategory);
@@ -65,25 +42,24 @@ const ProjectsSection = () => {
     setIsModalOpen(false);
   };
 
-  if (loading) {
-    return (
-      <section id='projects' className='py-20 bg-muted/30 rounded-2xl'>
-        <div className='container mx-auto px-2'>
-          <div className='max-w-6xl mx-auto'>
-            <div className='text-center mb-12'>
-              <h2 className='text-3xl md:text-4xl font-bold mb-4'>Projects</h2>
-              <p className='text-muted-foreground text-lg max-w-2xl mx-auto'>Loading projects...</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <>
       <section id='projects' className='py-20 bg-muted/30 rounded-2xl'>
-        <div className='container mx-auto px-2'>
+        {/* Admin Demo Notice */}
+        {session?.user.id && (
+          <div className='container max-w-1/2 px-4 mx-auto mb-8'>
+            <div className='bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4'>
+              <h4 className='font-semibold text-blue-900 dark:text-blue-100 mb-2'>🔧 Admin Demo Mode</h4>
+              <p className='text-sm text-blue-700 dark:text-blue-300'>
+                <span className='font-bold underline'>Nice!</span> You authenticated and are now viewing this section as
+                an admin. The edit and delete buttons available in each project card are for demonstration purposes,
+                showcasing CRUD functionality. You can update the projects but when you refresh the page the changes
+                will not be saved.
+              </p>
+            </div>
+          </div>
+        )}
+        <div className='container mx-auto px-4'>
           <div className='max-w-6xl mx-auto'>
             <div className='text-center mb-12'>
               <div className='flex items-center justify-center gap-4 mb-4'>
@@ -173,7 +149,14 @@ const ProjectsSection = () => {
               ))}
 
               {session && (
-                <Button onClick={() => console.log("create new project")} size='sm' className='ml-4'>
+                <Button
+                  onClick={() => {
+                    setSelectedProject(null);
+                    setIsFormOpen(true);
+                    setIsModalOpen(false);
+                  }}
+                  size='sm'
+                  className='ml-4'>
                   <Plus className='size-4' />
                   Add Project
                 </Button>

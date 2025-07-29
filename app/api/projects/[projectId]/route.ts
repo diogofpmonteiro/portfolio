@@ -1,3 +1,4 @@
+"use server";
 import { requireAdmin } from "@/app/data/require-admin";
 import { prisma } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";

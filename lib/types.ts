@@ -5,10 +5,10 @@ export interface Project {
   longDescription: string;
   image: string;
   technologies: string[];
-  liveUrl?: string;
-  githubUrl?: string;
+  liveUrl?: string | null;
+  githubUrl?: string | null;
   category: string;
   featured?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
