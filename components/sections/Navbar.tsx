@@ -17,23 +17,19 @@ const Navbar = () => {
     const handleScroll = () => {
       const sections = ["experience", "projects", "contact"];
       const scrollPosition = window.scrollY + 100;
-
-      const firstSection = document.getElementById(sections[0]);
-      if (firstSection && scrollPosition < firstSection.offsetTop) {
-        setActiveSection("");
-        return;
-      }
+      let newActiveSection = "";
 
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const { offsetTop, offsetHeight } = element;
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
+            newActiveSection = section;
             break;
           }
         }
       }
+      setActiveSection(newActiveSection);
     };
 
     window.addEventListener("scroll", handleScroll);

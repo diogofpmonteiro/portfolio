@@ -13,8 +13,7 @@ import { Project } from "@/lib/types";
 import { tryCatch } from "@/lib/try-catch";
 import { deleteProject } from "@/app/api/projects/actions";
 
-const ProjectManager = ({ initialProjects }: { initialProjects: Project[] }) => {
-  const [projects, setProjects] = useState<Project[]>(initialProjects);
+const ProjectManager = ({ projects }: { projects: Project[] }) => {
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
