@@ -83,8 +83,8 @@ const ProjectForm = ({ project, isOpen, onClose, onSubmit, isLoading = false }: 
       githubUrl: data.githubUrl || undefined,
     };
 
-    await onSubmit(cleanedData);
-    form.reset();
+    onSubmit(cleanedData);
+    form.reset(defaultValues);
     onClose();
   };
 

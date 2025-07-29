@@ -51,7 +51,6 @@ const ContactSection = () => {
         throw new Error("Failed to send");
       }
     } catch (error) {
-      console.log("Failed", error);
       throw new Error("Failed to send");
     }
   };

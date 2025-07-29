@@ -1,3 +1,8 @@
+export type ApiResponse = {
+  status: "success" | "error";
+  message: string;
+};
+
 export interface Project {
   id: string;
   title: string;
