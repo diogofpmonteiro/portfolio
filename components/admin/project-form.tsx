@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -13,37 +13,37 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Project } from "@/lib/types";
-import { ProjectFormData, projectSchema } from "@/lib/zod-schemas";
+import { ProjectSchemaType, projectSchema } from "@/lib/zod-schemas";
 
 interface ProjectFormProps {
   project?: Project | null;
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: ProjectFormData) => void;
+  onSubmit: (data: ProjectSchemaType) => void;
   isLoading?: boolean;
 }
 
 const ProjectForm = ({ project, isOpen, onClose, onSubmit, isLoading = false }: ProjectFormProps) => {
+  const defaultValues = {
+    title: "",
+    description: "",
+    longDescription: "",
+    image: "",
+    technologies: [],
+    liveUrl: "",
+    githubUrl: "",
+    category: undefined,
+    featured: false,
+  };
+
   const [newTechnology, setNewTechnology] = useState("");
 
-  const form = useForm<ProjectFormData>({
+  const form = useForm<ProjectSchemaType>({
     resolver: zodResolver(projectSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      longDescription: "",
-      image: "",
-      technologies: [],
-      liveUrl: "",
-      githubUrl: "",
-      category: undefined,
-      featured: false,
-    },
+    defaultValues,
   });
 
-  // TODO: Update this logic (working for now but can't be left like this)
-  // Reset form with project data when modal opens or project changes
-  useEffect(() => {
+  const setupForm = useCallback(() => {
     if (isOpen && project) {
       form.reset({
         title: project.title,
@@ -75,7 +75,7 @@ const ProjectForm = ({ project, isOpen, onClose, onSubmit, isLoading = false }: 
     );
   };
 
-  const handleSubmit = async (data: ProjectFormData) => {
+  const handleSubmit = async (data: ProjectSchemaType) => {
     // Clean up empty URLs
     const cleanedData = {
       ...data,
@@ -89,20 +89,14 @@ const ProjectForm = ({ project, isOpen, onClose, onSubmit, isLoading = false }: 
   };
 
   const handleClose = () => {
-    form.reset({
-      title: "",
-      description: "",
-      longDescription: "",
-      image: "",
-      technologies: [],
-      liveUrl: "",
-      githubUrl: "",
-      category: undefined,
-      featured: false,
-    });
+    form.reset(defaultValues);
     setNewTechnology("");
     onClose();
   };
+
+  useEffect(() => {
+    setupForm();
+  }, [setupForm]);
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>

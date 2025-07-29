@@ -7,8 +7,6 @@ export const contactFormSchema = z.object({
   message: z.string().min(10, { message: "Message must be at least 10 characters." }),
 });
 
-export type ContactFormData = z.infer<typeof contactFormSchema>;
-
 export const projectSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
@@ -21,4 +19,5 @@ export const projectSchema = z.object({
   featured: z.boolean(),
 });
 
-export type ProjectFormData = z.infer<typeof projectSchema>;
+export type ContactFormData = z.infer<typeof contactFormSchema>;
+export type ProjectSchemaType = z.infer<typeof projectSchema>;

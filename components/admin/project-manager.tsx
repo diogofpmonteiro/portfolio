@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,34 +10,14 @@ import Image from "next/image";
 import { toast } from "sonner";
 import ProjectForm from "./project-form";
 import { Project } from "@/lib/types";
+import { tryCatch } from "@/lib/try-catch";
+import { deleteProject } from "@/app/api/projects/actions";
 
-const ProjectManager = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
+const ProjectManager = ({ initialProjects }: { initialProjects: Project[] }) => {
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const fetchProjects = async () => {
-    try {
-      const response = await fetch("/api/projects");
-      if (response.ok) {
-        const data = await response.json();
-        setProjects(data);
-      }
-    } catch (error) {
-      console.error("Error fetching projects:", error);
-    }
-  };
-
-  const handleCreateProject = () => {
-    setEditingProject(null);
-    setIsFormOpen(true);
-  };
-
-  const handleEditProject = (project: Project) => {
-    setEditingProject(project);
-    setIsFormOpen(true);
-  };
 
   const handleDeleteProject = async (projectId: string) => {
     if (!confirm("Are you sure you want to delete this project?")) {
@@ -46,22 +26,22 @@ const ProjectManager = () => {
 
     setIsLoading(true);
 
-    try {
-      const response = await fetch(`/api/projects/${projectId}`, { method: "DELETE" });
+    const { result, error } = await tryCatch(deleteProject(projectId));
 
-      if (response.ok) {
-        toast.success("Project deleted successfully");
-        fetchProjects();
-      } else {
-        throw new Error("Failed to delete project");
-      }
-    } catch (error) {
-      console.error("Error deleting project:", error);
-      toast.error("Failed to delete project");
+    if (error) {
+      toast.error("An unexpected error occurred. Please try again.");
+      return;
+    }
+
+    if (result.status === "success") {
+      toast.success(result.message);
+    } else if (result.status === "error") {
+      toast.error(result.message);
     }
 
     setIsLoading(false);
   };
+
   const handleFormSubmit = async (data: any) => {
     setIsLoading(true);
     try {
@@ -76,7 +56,7 @@ const ProjectManager = () => {
 
       if (response.ok) {
         toast.success(editingProject ? "Project updated successfully" : "Project created successfully");
-        fetchProjects();
+
         setIsFormOpen(false);
         setEditingProject(null);
       } else {
@@ -90,11 +70,6 @@ const ProjectManager = () => {
     }
   };
 
-  // TODO: update this logic to react query from tanstack
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
   return (
     <div className='space-y-6'>
       <div className='flex items-center justify-between'>
@@ -102,7 +77,11 @@ const ProjectManager = () => {
           <h2 className='text-2xl font-bold'>Project Management</h2>
           <p className='text-muted-foreground'>Manage the portfolio projects - create, edit, and delete projects.</p>
         </div>
-        <Button onClick={handleCreateProject}>
+        <Button
+          onClick={() => {
+            setEditingProject(null);
+            setIsFormOpen(true);
+          }}>
           <Plus className='w-4 h-4' />
           Add Project
         </Button>
@@ -162,7 +141,10 @@ const ProjectManager = () => {
                 <Button
                   size='sm'
                   variant='outline'
-                  onClick={() => handleEditProject(project)}
+                  onClick={() => {
+                    setEditingProject(project);
+                    setIsFormOpen(true);
+                  }}
                   className='flex-1'
                   disabled={isLoading}>
                   <Edit className='w-3 h-3 mr-1' />
@@ -189,12 +171,7 @@ const ProjectManager = () => {
             <div className='text-muted-foreground mb-4'>
               <Plus className='w-12 h-12 mx-auto mb-4 opacity-50' />
               <h3 className='text-lg font-semibold mb-2'>No projects yet</h3>
-              <p>Create your first project to get started.</p>
             </div>
-            <Button onClick={handleCreateProject}>
-              <Plus className='w-4 h-4 mr-2' />
-              Create Your First Project
-            </Button>
           </CardContent>
         </Card>
       )}

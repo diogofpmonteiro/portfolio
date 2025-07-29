@@ -95,17 +95,6 @@ const ProjectModal = ({ project, isOpen, onClose, isLoggedIn = false, onEdit, on
               </Button>
             )}
           </div>
-
-          {/* Admin Demo Notice */}
-          {isLoggedIn && (
-            <div className='bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4'>
-              <h4 className='font-semibold text-blue-900 dark:text-blue-100 mb-2'>🔧 Admin Demo Mode</h4>
-              <p className='text-sm text-blue-700 dark:text-blue-300'>
-                You're viewing this project as an admin. The edit and delete buttons above are for demonstration
-                purposes, showcasing CRUD functionality.
-              </p>
-            </div>
-          )}
         </div>
       </DialogContent>
     </Dialog>

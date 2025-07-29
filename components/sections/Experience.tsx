@@ -113,7 +113,7 @@ const experienceData: ExperienceItem[] = [
 const ExperienceSection = () => {
   return (
     <section id='experience' className='py-20'>
-      <div className='container mx-auto px-4 md:my-32'>
+      <div className='container mx-auto px-4'>
         <div className='max-w-4xl mx-auto flex flex-col items-center'>
           <div className='text-center mb-12'>
             <h2 className='text-3xl md:text-4xl font-bold mb-4'>Work Experience</h2>
@@ -202,8 +202,8 @@ const ExperienceSection = () => {
             </div>
           </div>
           <p className='text-[10px] mt-12 text-muted-foreground text-center max-w-xl'>
-            Note: As a developer for a design agency, I ended up working on multiple projects, which could overlap. So
-            if you have any doubts regarding the timeline, maybe that can help explain it. 🙂
+            Note: As a developer at a design agency, I worked on multiple projects at once, which led to overlapping
+            timelines in my experiences. This might help clear up any questions about project schedules. 🙂
           </p>
         </div>
       </div>

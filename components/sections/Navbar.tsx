@@ -18,6 +18,12 @@ const Navbar = () => {
       const sections = ["experience", "projects", "contact"];
       const scrollPosition = window.scrollY + 100;
 
+      const firstSection = document.getElementById(sections[0]);
+      if (firstSection && scrollPosition < firstSection.offsetTop) {
+        setActiveSection("");
+        return;
+      }
+
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {

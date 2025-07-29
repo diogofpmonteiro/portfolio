@@ -4,12 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { authClient } from "@/lib/auth-client";
 import { Loader2Icon, GithubIcon, UserIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
 export const LoginForm = () => {
   const [githubPending, startGithubTransition] = useTransition();
   const [anonymousPending, startAnonymousTransition] = useTransition();
+
+  const router = useRouter();
 
   const signInWithGithub = async () => {
     startGithubTransition(async () => {
@@ -34,6 +37,7 @@ export const LoginForm = () => {
         fetchOptions: {
           onSuccess: () => {
             toast.success("Signed in anonymously, you will be redirected..");
+            router.push("/");
           },
           onError: (_error) => {
             toast.error("Failed to sign in anonymously");
