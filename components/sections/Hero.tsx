@@ -35,7 +35,7 @@ const HeroSection = () => {
 
             <p className='text-xl md:text-2xl text-muted-foreground max-w-xl mx-auto'>
               I'm a <span className='text-foreground font-semibold'>Full Stack Developer</span>, inspired by turning
-              your ideas into reality.
+              your ideas into reality
             </p>
           </div>
 
