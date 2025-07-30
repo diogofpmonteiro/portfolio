@@ -13,9 +13,9 @@ const NotAdminRoute = () => {
           </div>
           <CardTitle className='text-2xl'>Access Restricted</CardTitle>
           <CardDescription className='max-w-xs mx-auto'>
-            Hey! You're not an admin, which means you cannot actually make any of the CRUD operations.. Sorry!
+            Hey! You&apos;re not an admin, which means you cannot actually make any of the CRUD operations.. Sorry!
             <br />
-            Thanks for trying out my website though! 😁
+            Thanks for checking out my website though! 😁
           </CardDescription>
         </CardHeader>
         <CardContent>

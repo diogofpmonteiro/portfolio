@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -47,9 +47,9 @@ const ProjectsSection = ({ projects }: { projects: Project[] }) => {
               <h4 className='font-semibold text-blue-900 dark:text-blue-100 mb-2'>🔧 Admin Demo Mode</h4>
               <p className='text-sm text-blue-700 dark:text-blue-300'>
                 <span className='font-bold underline'>Nice!</span> You authenticated and are now viewing this section as
-                an admin. The "Add Project" button besides the categories and the "edit" and "delete" buttons at the top
-                of each project details card are for demonstration purposes, showcasing CRUD functionality. You won't be
-                able to update the projects.
+                an admin. The &quot;Add Project&quot; button besides the categories and the &quot;edit&quot; and
+                &quot;delete&quot; buttons at the top of each project details card are for demonstration purposes,
+                showcasing CRUD functionality. You won&apos;t be able to update the projects.
               </p>
             </div>
           </div>
