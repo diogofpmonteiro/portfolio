@@ -15,6 +15,7 @@ const HeroSection = () => {
               src='/picture.jpeg'
               alt='Profile'
               fill
+              priority
               className='rounded-full object-cover border-4 border-primary/20'
             />
             <div className='absolute inset-0 rounded-full bg-gradient-to-tr from-primary/20 to-transparent'></div>

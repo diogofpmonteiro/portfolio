@@ -23,6 +23,7 @@ const ProjectManager = ({ projects }: { projects: Project[] }) => {
     setIsLoading(true);
 
     if (!confirm("Are you sure you want to delete this project?")) {
+      setIsLoading(false);
       return;
     }
 
