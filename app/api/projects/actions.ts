@@ -31,7 +31,7 @@ export async function createProject(data: ProjectSchemaType): Promise<ApiRespons
       status: "success",
       message: "Project created successfully",
     };
-  } catch (error) {
+  } catch {
     return {
       status: "error",
       message: "Failed to create project",
@@ -65,7 +65,7 @@ export async function editProject(data: ProjectSchemaType, projectId: string): P
       status: "success",
       message: "Project edited successfully",
     };
-  } catch (error) {
+  } catch {
     return {
       status: "error",
       message: "Failed to edit project",
@@ -89,7 +89,7 @@ export async function deleteProject(projectId: string): Promise<ApiResponse> {
       status: "success",
       message: "Project deleted successfully",
     };
-  } catch (error) {
+  } catch {
     return {
       status: "error",
       message: "Failed to delete project",

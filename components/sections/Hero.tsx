@@ -29,13 +29,13 @@ const HeroSection = () => {
             </Badge>
 
             <h1 className='text-4xl md:text-6xl font-bold tracking-tight'>
-              Hey, I'm{" "}
+              Hey, I&apos;m{" "}
               <span className='bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent'>Diogo</span>
             </h1>
 
             <p className='text-xl md:text-2xl text-muted-foreground max-w-xl mx-auto'>
-              I'm a <span className='text-foreground font-semibold'>Full Stack Developer</span>, inspired by turning
-              your ideas into reality.
+              I&apos;m a <span className='text-foreground font-semibold'>Full Stack Developer</span>, inspired by
+              turning your ideas into reality.
             </p>
           </div>
 

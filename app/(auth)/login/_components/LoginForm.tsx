@@ -23,7 +23,7 @@ export const LoginForm = () => {
           onSuccess: () => {
             toast.success("Signed in with GitHub, you will be redirected..");
           },
-          onError: (_error) => {
+          onError: () => {
             toast.error("Internal server error");
           },
         },
@@ -39,7 +39,7 @@ export const LoginForm = () => {
             toast.success("Signed in anonymously, you will be redirected..");
             router.push("/");
           },
-          onError: (_error) => {
+          onError: () => {
             toast.error("Failed to sign in anonymously");
           },
         },
