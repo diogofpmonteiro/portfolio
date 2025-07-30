@@ -50,7 +50,7 @@ const ContactSection = () => {
       } else {
         throw new Error("Failed to send");
       }
-    } catch (error) {
+    } catch {
       throw new Error("Failed to send");
     }
   };
@@ -60,7 +60,7 @@ const ContactSection = () => {
 
     try {
       await sendEmail();
-    } catch (error) {
+    } catch {
       toast.error("Failed to send message");
     } finally {
       setIsSubmitting(false);
@@ -74,7 +74,7 @@ const ContactSection = () => {
           <div className='text-center mb-12'>
             <h2 className='text-3xl md:text-4xl font-bold mb-4'>Get In Touch</h2>
             <p className='text-muted-foreground text-lg max-w-2xl mx-auto'>
-              Have a project in mind or want to collaborate? I'd love to hear from you!
+              Have a project in mind or want to collaborate? I&apos;d love to hear from you!
             </p>
           </div>
 
@@ -82,10 +82,10 @@ const ContactSection = () => {
             {/* Contact Information */}
             <div className='space-y-6'>
               <div>
-                <h3 className='text-xl font-semibold mb-4'>Let's Connect</h3>
+                <h3 className='text-xl font-semibold mb-4'>Let&apos;s Connect</h3>
                 <p className='text-muted-foreground mb-6'>
-                  I'm always open to discussing new opportunities, interesting projects, or just having a chat about
-                  technology and development.
+                  I&apos;m always open to discussing new opportunities, interesting projects, or just having a chat
+                  about technology and development.
                 </p>
               </div>
 
